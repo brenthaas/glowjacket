@@ -1,10 +1,12 @@
 #include <FadeBlinker.h>
 
-FadeBlinker led(13, 200, 500);
 unsigned long now;
+int pin = 13;
+FadeBlinker led(pin, 200, 500);
 
 void setup()
 {
+  SoftPWMBegin(SOFTPWM_NORMAL);
 }
 
 void loop()

@@ -20,7 +20,7 @@ class FadeBlinker
     unsigned long _down_start;
     unsigned long _down_end;
     unsigned long _end_at;
-    void set_pin(uint8_t value);
+    void set_pin(int value);
 };
 
 #endif
