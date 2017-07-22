@@ -12,8 +12,10 @@ void setup()
 void loop()
 {
   now = millis();
-  if(led.is_finished(now)){
-    led.reset(now, 200, 700);
+  if(led.is_finished(now)) {
+    int up = random(100, 1500);
+    int down =  random(100, 1500);
+    led.reset(now, up, down);
   }
   led.update(now);
 }
