@@ -15,7 +15,9 @@ void loop()
   if(led.is_finished(now)) {
     int up = random(100, 1500);
     int down =  random(100, 1500);
-    led.reset(now, up, down);
+    led.set_up_duration(up);
+    led.set_down_duration(down);
+    led.reset(now);
   }
   led.update(now);
 }

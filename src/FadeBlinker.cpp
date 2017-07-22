@@ -16,7 +16,9 @@
 
 FadeBlinker::FadeBlinker(int pin, int up_duration, int down_duration) {
   // setup times
-  reset(millis(), up_duration, down_duration);
+  set_up_duration(up_duration);
+  set_down_duration(down_duration);
+  reset(millis());
 
   // setup pin
   _pin = pin;
@@ -24,17 +26,16 @@ FadeBlinker::FadeBlinker(int pin, int up_duration, int down_duration) {
   set_pin(LOW);
 }
 
-void FadeBlinker::reset(unsigned long at_time, int up_duration, int down_duration) {
+void FadeBlinker::reset(unsigned long at_time) {
   _start_at = at_time;
 
   SoftPWMSet(_pin, OFF);
-  SoftPWMSetFadeTime(_pin, up_duration, down_duration);
 
   // setup timers
   _up_start = PAUSE_TIME + _start_at;
-  _up_end = _up_start + up_duration;
+  _up_end = _up_start + _up_duration;
   _down_start = _up_end + PAUSE_TIME;
-  _down_end = _down_start + down_duration;
+  _down_end = _down_start + _down_duration;
   _end_at = _down_end + PAUSE_TIME;
 }
 
@@ -64,6 +65,16 @@ void FadeBlinker::set_pin(int value) {
     SoftPWMSetPercent(_pin, value);
     _current_state = value;
   }
+}
+
+void FadeBlinker::set_up_duration(int duration) {
+  _up_duration = duration;
+  SoftPWMSetFadeTime(_pin, _up_duration, _down_duration);
+}
+
+void FadeBlinker::set_down_duration(int duration) {
+  _down_duration = duration;
+  SoftPWMSetFadeTime(_pin, _up_duration, _down_duration);
 }
 
 bool FadeBlinker::is_finished(unsigned long at_time = 0) {
