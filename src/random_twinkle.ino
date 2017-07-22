@@ -1,33 +1,27 @@
-#include "SoftPWM.h"
+#include <FadeBlinker.h>
+
+FadeBlinker led(13, 200, 500);
+unsigned long now;
 
 void setup()
 {
-  // Initialize
-  SoftPWMBegin();
-
-  // Create and set pin 13 to 0 (off)
-  SoftPWMSet(13, 0);
-
-  // Set fade time for pin 13 to 100 ms fade-up time, and 500 ms fade-down time
-  SoftPWMSetFadeTime(13, 200, 600);
 }
-
-struct pixel {
-  int pin;
-  int up_duration;
-};
 
 void loop()
 {
+  now = millis();
+  if(led.is_finished(now)){
+    led.reset(now, 200, 700);
+  }
+  led.update(now);
+}
+
+void turn_on(int pin) {
   // Turn on - set to 100%
-  SoftPWMSetPercent(13, 100);
+  SoftPWMSetPercent(pin, 100);
+}
 
-  // Wait for LED to turn on - you could do other tasks here
-  delay(300);
-
+void turn_off(int pin) {
   // Turn off - set to 0%
-  SoftPWMSetPercent(13, 0);
-
-  // Wait for LED to turn off
-  delay(1000);
+  SoftPWMSetPercent(pin, 0);
 }
