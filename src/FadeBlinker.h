@@ -11,7 +11,7 @@ class FadeBlinker
     void reset(unsigned long at_time);
     void set_up_duration(int duration);
     void set_down_duration(int duration);
-    bool update(unsigned long at_time);
+    bool update(unsigned long at_time = 0);
     bool is_finished(unsigned long at_time);
   private:
     int _pin;

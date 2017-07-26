@@ -1,8 +1,9 @@
 #include <FadeBlinker.h>
 
 unsigned long now;
-int pin = 13;
-FadeBlinker led(pin, 200, 500);
+
+const int num_pixels = 1;
+FadeBlinker leds[num_pixels] = { FadeBlinker(13, 200, 500) };
 
 void setup()
 {
@@ -12,14 +13,17 @@ void setup()
 void loop()
 {
   now = millis();
-  if(led.is_finished(now)) {
-    int up = random(100, 1500);
-    int down =  random(100, 1500);
-    led.set_up_duration(up);
-    led.set_down_duration(down);
-    led.reset(now);
-  }
-  led.update(now);
+  // for(int i = 0; i < num_pixels; i++) {
+    FadeBlinker& led = leds[0];
+    if(led.is_finished(now)) {
+      int up = random(100, 1500);
+      int down =  random(100, 1500);
+      led.set_up_duration(up);
+      led.set_down_duration(down);
+      led.reset(now);
+    }
+    led.update(now);
+  // }
 }
 
 void turn_on(int pin) {
